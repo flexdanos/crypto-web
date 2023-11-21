@@ -10,37 +10,10 @@ const Statistics = () => {
   const [price, setPrice] = useState();
   const [socket, setSocket] = useState(null);
 
-  // const fetchdata = async () => {
-  //   const response = await axios.get(
-  //     "https://api.coinranking.com/v2/coins?limit=10"
-  //   );
-
-  //   const data = response.data.data.coins[0].sparkline.slice(0, 12);
-
-  //   if (data) {
-  //     setLoading(false);
-  //   } else {
-  //     setLoading(true);
-  //   }
-  // setRate(response.data.data.coins[0].change);
-  // setPrice(response.data.data.coins[0].price);
-  // setData(
-  //   data.map((items, index) => {
-  //     return { hr: index * 2, price: parseFloat(items) };
-  //   })
-  // );
-  // };
-
-  // useEffect(() => {
-  //   fetchdata();
-
-  //   setInterval(() => fetchdata(), 120000);
-
-  // }, []);
 
   useEffect(() => {
     // Create WebSocket connection
-    const ws = new WebSocket("ws://localhost:4000");
+    const ws = new WebSocket("ws://user-auth-server.onrender.com");
 
     // Store the WebSocket connection in state
     setSocket(ws);
@@ -60,25 +33,15 @@ const Statistics = () => {
           0,
           12
         );
-        // console.log(data);
         setCoins(data)
-        // setCoins(
-        //   data.map((items, index) => {
-        //     return { hr: index * 2, price: parseFloat(items) };
-        //   })
-        // );
         setRate(JSON.parse(event.data).data.coins[0].change);
         setPrice(JSON.parse(event.data).data.coins[0].price);
       }
-      // Process the message as needed
     };
 console.log(coins);
-    // Attach the event handler to the WebSocket connection
     if (socket) {
       socket.addEventListener("message", handleReceiveMessage);
     }
-
-    // Clean up the event handler on unmount
     return () => {
       if (socket) {
         socket.removeEventListener("message", handleReceiveMessage);
@@ -88,7 +51,6 @@ console.log(coins);
 
   const sendMessage = () => {
     if (socket) {
-      // Send a message to the server
       socket.send("getCoin");
     }
   };

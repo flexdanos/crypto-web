@@ -1,5 +1,3 @@
-// Statistics.js
-
 import React, { useEffect, useRef, useState } from "react";
 import AreaChartComponent from "./AreaCharrt";
 import Loader from "./Loader";
@@ -13,14 +11,18 @@ const Statistics = () => {
 
   useEffect(() => {
     // Create WebSocket connection
-    const ws = new WebSocket("ws://localhost:4000");
+    const ws = new WebSocket("ws://user-auth-server.onrender.com");
     // Store the WebSocket connection in ref
     socketRef.current = ws;
+  
     // Clean up the WebSocket connection on unmount
-    // return () => {
-    //   ws.close();
-    // };
+    return () => {
+      if (socketRef.current) {
+        socketRef.current.close();
+      }
+    };
   }, []);
+  
 
   useEffect(() => {
     // Event handler for receiving messages
@@ -54,20 +56,25 @@ const Statistics = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      sendMessage();
+      if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
+        sendMessage();
+      }
     }, 1000);
-
+  
     return () => {
       clearTimeout(timer);
     };
-  }, []);
+  }, [socketRef.current]); // Updated dependency array
+  
+
 
   const sendMessage = () => {
-    if (socketRef.current) {
-      // Send a message to the server
+    if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
+      // Check if the connection is open before sending a message
       socketRef.current.send("getCoin");
     }
   };
+  
 
   useEffect(() => {
     if (!loading) {
