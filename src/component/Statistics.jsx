@@ -9,11 +9,12 @@ const Statistics = () => {
   const [price, setPrice] = useState();
   const socketRef = useRef(null); // Use a ref to store the WebSocket connection
 
-  const BASE_WSS = import.meta.env.VITE_WSS_ENV;
+  const webSocket = import.meta.env.VITE_WS_URL;
+
 
   useEffect(() => {
     // Create WebSocket connection
-    const ws = new WebSocket(BASE_WSS);
+    const ws = new WebSocket(webSocket);
     // Store the WebSocket connection in ref
     socketRef.current = ws;
   
