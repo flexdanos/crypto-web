@@ -7,13 +7,4 @@ dotenv.config();
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  server: {
-    proxy: {
-      '/api': {
-        target: import.meta.env.VITE_VERCEL_ENV,
-        changeOrigin: true,
-        ws: true,
-      },
-    },
-  },
 });
