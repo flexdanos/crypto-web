@@ -11,7 +11,7 @@ const Statistics = () => {
 
   useEffect(() => {
     // Create WebSocket connection
-    const ws = new WebSocket("ws://user-auth-server.onrender.com");
+    const ws = new WebSocket("wss://user-auth-server.onrender.com");
     // Store the WebSocket connection in ref
     socketRef.current = ws;
   
