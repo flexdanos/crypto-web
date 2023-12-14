@@ -10,11 +10,12 @@ const Statistics = () => {
   const [price, setPrice] = useState();
   const [socket, setSocket] = useState(null);
 
-  const BASE_WSS = import.meta.env.VITE_WSS_ENV;
+  const webSocket = import.meta.env.VITE_WS_URL;
+
 
   useEffect(() => {
     // Create WebSocket connection
-    const ws = new WebSocket(BASE_WSS);
+    const ws = new WebSocket(webSocket);
 
     // Store the WebSocket connection in state
     setSocket(ws);
