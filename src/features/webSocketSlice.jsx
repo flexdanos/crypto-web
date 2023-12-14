@@ -1,9 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const webSocket = import.meta.env.VITE_WS_URL;
+
 const websocketSlice = createSlice({
   name: "websocket",
   initialState: {
-    url: "ws://user-auth-server.onrender.com",
+    url: webSocket,
     socket: null,
   },
   reducers: {
