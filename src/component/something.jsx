@@ -10,10 +10,11 @@ const Statistics = () => {
   const [price, setPrice] = useState();
   const [socket, setSocket] = useState(null);
 
+  const BASE_WSS = import.meta.env.VITE_WSS_ENV;
 
   useEffect(() => {
     // Create WebSocket connection
-    const ws = new WebSocket("ws://user-auth-server.onrender.com");
+    const ws = new WebSocket(BASE_WSS);
 
     // Store the WebSocket connection in state
     setSocket(ws);
